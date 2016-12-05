@@ -1,6 +1,6 @@
 <?php
 namespace service;
-require("./classes/core/model.php");
+require_once("./classes/core/model.php");
 use core\model as model;
 
 class autoGenModel extends model{

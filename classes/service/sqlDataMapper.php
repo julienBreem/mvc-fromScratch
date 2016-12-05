@@ -1,6 +1,6 @@
 <?php
 namespace service;
-require("./classes/core/dataMapper.php");
+require_once("./classes/core/dataMapper.php");
 use core\dataMapper as dataMapper;
 class sqlDataMapper extends dataMapper{
 	
@@ -32,47 +32,73 @@ class sqlDataMapper extends dataMapper{
 		}		
 	}
 	
-	public function connect()
+	protected function connect()
 	{
 		$this->dbh = new \PDO('mysql:host='.$this->host.';dbname='.$this->dbname, $this->username, $this->password);
 	}
 	
-	public function disconnect()
+	protected function disconnect()
 	{
 		$this->dbh = null;
 	}
 	
-	public function create( $modelName, $values )
+	public function insert( $tableName, $values )
 	{
-		$sql = "INSERT into ".$modelName;
-		$sql.= " (";
-		foreach($values as $key => $values)$sql.=$key.",";
-		$sql = substr($sql, 0, -1).")";
-		$sql.= " VALUES ";
-		$sql.= " (";
-		foreach($values as $key => $values)$sql.="'".$values."',";
-		$sql = substr($sql, 0, -1).")";
-		$q = $this->dbh->prepare($sql);
-		return $q->execute();		
+		$this->sql = "";
+		$this->sql.= "INSERT into ".$tableName;
+		$this->sql.= " (";
+		foreach($values as $key => $values)$this->sql.=$key.",";
+		$this->sql = substr($this->sql, 0, -1).")";
+		$this->sql.= " VALUES ";
+		$this->sql.= " (";
+		foreach($values as $key => $values)$this->sql.="'".$values."',";
+		$this->sql = substr($this->sql, 0, -1).")";
+		$this->execute();
+		return $result;
 	}
-	public function read( $modelName )
+	public function select( $tableName )
 	{
-		
+		$this->sql = "";
+		$this->sql.= "SELECT * FROM ".$tableName;
 	}
-	public function update( $modelName, $values )
+	public function update( $tableName, $values )
 	{
-		
+		$this->sql = "";
+		$this->sql.= "UPDATE ".$tableName." SET ";
+		foreach($values as $id => $value)$this->sql.= $id."='".$value."',";
+		$this->sql = substr($this->sql, 0, -1);
 	}
-	public function delete( $modelName )
+	public function delete( $tableName )
 	{
-		
+		$this->sql = "";
+		$this->sql.= "DELETE FROM ".$tableName;
 	}
-	
-	public function fetchColumns( $modelName )
+	public function limit( $limit )
 	{
-		$q = $this->dbh->prepare("SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='".$this->dbname."' AND `TABLE_NAME`='".$modelName."'");
+		$this->sql.= " LIMIT ".$limit;
+	}
+	public function where( $conditions )
+	{
+		$this->sql.= " WHERE ";
+		foreach($conditions as $condition)$this->sql.= $condition." AND ";
+		$this->sql = substr($this->sql, 0, -5);
+	}
+	public function execute()
+	{
+		$this->sql.= ";";
+		$this->connect();
+		$q = $this->dbh->prepare($this->sql);
+		$result = $q->execute();
+		$this->disconnect();
+	}
+	public function fetchColumns( $tableName )
+	{
+		$this->connect();
+		$q = $this->dbh->prepare("SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='".$this->dbname."' AND `TABLE_NAME`='".$tableName."'");
 		$q->execute();
-		return $q->fetchAll(\PDO::FETCH_COLUMN);		
+		$result = $q->fetchAll(\PDO::FETCH_COLUMN);		
+		$this->disconnect();
+		return $result;
 	}
 }
 ?>

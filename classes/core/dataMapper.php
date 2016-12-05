@@ -5,11 +5,13 @@ abstract class dataMapper{
 	abstract protected function connect();
 	abstract protected function disconnect();
 	
-	abstract protected function fetchColumns( $modelName );
+	abstract protected function fetchColumns( $tableName );
 	
-	abstract protected function create( $modelName, $values );
-	abstract protected function read( $modelName );
-	abstract protected function update( $modelName, $values );
-	abstract protected function delete( $modelName );
+	abstract protected function insert( $tableName, $values );
+	abstract protected function select( $tableName );
+	abstract protected function update( $tableName, $values );
+	abstract protected function delete( $tableName );
+	abstract protected function where( $conditions );
+	abstract protected function limit( $limit );
 }
 ?>

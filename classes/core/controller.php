@@ -3,12 +3,12 @@ namespace core;
 class controller{
 	
 	protected $view;
-	protected $modelFactory;
+	protected $modelService;
 	protected $name;
-	public function __construct( $view, $modelFactory )
+	public function __construct( $view, $modelService )
     {
 		$this->view = $view;
-		$this->modelFactory = $modelFactory;
+		$this->modelService = $modelService;
 	}
 	
 	public function setName( $name ){

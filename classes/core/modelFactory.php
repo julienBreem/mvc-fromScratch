@@ -3,26 +3,13 @@ namespace core;
 class modelFactory{
 	
 	protected $directory = "model";
-	protected $dataMapper; 
 	
-	
-	public function __construct( $dataMapper )
-    {
-		$this->dataMapper = $dataMapper;
-	}
-	
-	public function buildModel( $name )
+	public function getModel( $name )
 	{
-		if($this->directory !== false){
-			
-		}
-		else{
-			require('./classes/service/autoGenModel.php');
-			$model = new \service\autoGenModel($name);
-			$this->dataMapper->connect();
-			foreach($this->dataMapper->fetchColumns($name) as $id => $name)$model->attributes[$name] = "";
-			return $model;
-		}
+		$path = "./".$this->directory."/".$name.".php";
+		require_once($path);
+		$class = "model\\".$name;
+		return new $class();
 	}
 	public function setDirectory($directory)
 	{

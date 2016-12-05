@@ -10,11 +10,11 @@ class controllerFactory{
 		
 	}
 	
-	public function getController( $request, $view, $modelFactory )
+	public function getController( $request, $view, $modelService )
 	{
 		include("./".$this->directory."/".$request->getResourceName().".php");
 		$class = $this->directory. '\\' . $request->getResourceName();
-		$controller = new $class($view, $modelFactory);
+		$controller = new $class($view, $modelService);
 		$controller->setName($request->getResourceName());
 		return $controller;
 	}

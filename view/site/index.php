@@ -1,6 +1,5 @@
 <body>
-	Hello 
 	<?php
-	echo $this->models['model']->attributes['column1'];
+	foreach($this->models['model']->attributes as $id => $value)echo $id." => ".$value."<br>";
 	?>
 </body>

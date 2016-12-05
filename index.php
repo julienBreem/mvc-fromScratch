@@ -2,13 +2,14 @@
 define('DS', DIRECTORY_SEPARATOR); // meilleur portabilité sur les différents systeme.
 define('ROOT', dirname(__FILE__).DS); // pour se simplifier la vie
 session_start();
-require('classes/core/request.php');
-require('classes/core/viewFactory.php');
-require('classes/core/controllerFactory.php');
-require('classes/core/modelFactory.php');
-require('classes/core/dataMapperFactory.php');
-
-
+require_once('classes/core/request.php');
+require_once('classes/core/viewFactory.php');
+require_once('classes/core/controllerFactory.php');
+require_once('classes/service/modelService.php');
+require_once('classes/core/dataMapperFactory.php');
+//config
+$config["modelType"] = "autoGen";
+$config["connectionString"] = "mysql:host=localhost;dbname=test;username=root;";
 //get the URI
 $uri = isset($_SERVER['REQUEST_URI']) 
            ? $_SERVER['REQUEST_URI'] 
@@ -22,15 +23,15 @@ $view = $viewFactory->getView($request);
 $view->setDefaultTemplateLocation(__DIR__ . '/templates');
 
 //getting the data mapper from the connection string
-$connectionString = "mysql:host=localhost;dbname=test;username=root;";
-$dataMapperFactory = new core\dataMapperFactory($connectionString);
+
+$dataMapperFactory = new core\dataMapperFactory($config["connectionString"]);
 $dataMapper = $dataMapperFactory->getDataMapper();
 
-$modelFactory = new core\modelFactory($dataMapper);
+$modelService = new service\modelService($dataMapper,$config["modelType"]);
 
 //getting controller and feeding it the view, the request and the modelFactory.
 $controllerFactory = new core\controllerFactory();
-$controller = $controllerFactory->getController($request,$view,$modelFactory);
+$controller = $controllerFactory->getController($request,$view,$modelService);
 
 //Execute the necessary command on the controller 
 $command = $request->getCommand();
