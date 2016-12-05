@@ -1,4 +1,7 @@
 <?php
+
+require __DIR__ . '/vendor/autoload.php';
+
 define('DS', DIRECTORY_SEPARATOR); // meilleur portabilité sur les différents systeme.
 define('ROOT', dirname(__FILE__).DS); // pour se simplifier la vie
 session_start();
@@ -11,11 +14,15 @@ require_once('classes/core/dataMapperFactory.php');
 $config["modelType"] = "autoGen";
 $config["connectionString"] = "mysql:host=localhost;dbname=test;username=root;";
 $config["defaultTemplateLocation"] = __DIR__ . '/templates';
+
+
 //get the URI
 $uri = isset($_SERVER['REQUEST_URI']) 
            ? $_SERVER['REQUEST_URI'] 
            : '/';
 //Initializes the request abstraction from URI
+new \mvc\scratch\Request();
+
 $request = new core\request($uri);
 
 //getting the view class from the request
@@ -24,7 +31,6 @@ $view = $viewFactory->getView($request);
 $view->setDefaultTemplateLocation($config["defaultTemplateLocation"]);
 
 //getting the data mapper from the connection string
-
 $dataMapperFactory = new core\dataMapperFactory($config["connectionString"]);
 $dataMapper = $dataMapperFactory->getDataMapper();
 
