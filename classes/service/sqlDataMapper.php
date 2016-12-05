@@ -45,7 +45,7 @@ class sqlDataMapper extends dataMapper{
 	public function insert( $tableName, $values )
 	{
 		$this->sql = "";
-		$this->sql.= "INSERT into ".$tableName;
+		$this->sql.= "INSERT into `".$tableName."`";
 		$this->sql.= " (";
 		foreach($values as $key => $values)$this->sql.=$key.",";
 		$this->sql = substr($this->sql, 0, -1).")";
@@ -59,37 +59,44 @@ class sqlDataMapper extends dataMapper{
 	public function select( $tableName )
 	{
 		$this->sql = "";
-		$this->sql.= "SELECT * FROM ".$tableName;
+		$this->sql.= "SELECT * FROM `".$tableName."`";
+		return $this;
 	}
 	public function update( $tableName, $values )
 	{
 		$this->sql = "";
-		$this->sql.= "UPDATE ".$tableName." SET ";
+		$this->sql.= "UPDATE `".$tableName."` SET ";
 		foreach($values as $id => $value)$this->sql.= $id."='".$value."',";
 		$this->sql = substr($this->sql, 0, -1);
+		return $this;
 	}
 	public function delete( $tableName )
 	{
 		$this->sql = "";
-		$this->sql.= "DELETE FROM ".$tableName;
+		$this->sql.= "DELETE FROM `".$tableName."`";
+		return $this;
 	}
 	public function limit( $limit )
 	{
 		$this->sql.= " LIMIT ".$limit;
+		return $this;
 	}
 	public function where( $conditions )
 	{
 		$this->sql.= " WHERE ";
 		foreach($conditions as $condition)$this->sql.= $condition." AND ";
 		$this->sql = substr($this->sql, 0, -5);
+		return $this;
 	}
 	public function execute()
 	{
 		$this->sql.= ";";
 		$this->connect();
 		$q = $this->dbh->prepare($this->sql);
-		$result = $q->execute();
+		$q->execute();
+		$result = $q->fetch();
 		$this->disconnect();
+		return $result;
 	}
 	public function fetchColumns( $tableName )
 	{
@@ -101,4 +108,3 @@ class sqlDataMapper extends dataMapper{
 		return $result;
 	}
 }
-?>

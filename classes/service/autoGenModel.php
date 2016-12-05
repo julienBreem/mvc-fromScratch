@@ -21,4 +21,3 @@ class autoGenModel extends model{
 		return $this->name;
 	}
 }
-?>

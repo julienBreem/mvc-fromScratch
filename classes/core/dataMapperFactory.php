@@ -17,12 +17,10 @@ class dataMapperFactory{
 		$dataMapper = null;
 		switch($this->type){
 			case "mysql":
-				require("./classes/service/sqlDataMapper.php");
+				require_once("./classes/service/sqlDataMapper.php");
 				$dataMapper = new \service\sqlDataMapper($this->connectionString);
 				break;
 		}
 		return $dataMapper;
 	}
 }
-
-?>

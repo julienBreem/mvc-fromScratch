@@ -11,9 +11,8 @@ class site extends controller{
 	
 	public function index()
 	{
-		$model = $this->modelService->buildModel("table");
-		$model->attributes['column1'] = 'test';
+		$model = $this->modelService->getModelById("table",1);
+		// $model->attributes['column1'] = 'test';
 		$this->render('index',['model' => $model]);
 	}
 }
-?>

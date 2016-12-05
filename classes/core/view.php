@@ -31,4 +31,3 @@ class view{
 		include($this->footer);
 	}
 }
-?>

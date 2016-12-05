@@ -14,4 +14,3 @@ abstract class dataMapper{
 	abstract protected function where( $conditions );
 	abstract protected function limit( $limit );
 }
-?>

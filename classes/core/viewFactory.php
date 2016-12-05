@@ -12,10 +12,9 @@ class viewFactory{
 	
 	public function getView( $request )
 	{
-		include("./".$this->directory."/".$request->getResourceName().".php");
+		require_once("./".$this->directory."/".$request->getResourceName().".php");
 		$class = $this->directory. '\\' . $request->getResourceName();
 		return new $class();
 	}
 }
 
-?>

@@ -33,6 +33,12 @@ class modelService{
 		}
 		
 	}
+	public function getModelById( $modelName,$id ){
+		$entity = $this->buildModel($modelName);
+		$attributes = $this->dataMapper->select($modelName)->where(["id=1"])->execute();
+		foreach($entity->attributes as $id => $values)$entity->attributes[$id] = $attributes[$id];
+		return $entity;
+	}
 	
 	
 }

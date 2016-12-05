@@ -28,4 +28,3 @@ class controller{
 		$this->view->setModels($models);
 	}
 }
-?>

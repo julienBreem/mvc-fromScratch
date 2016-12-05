@@ -10,6 +10,7 @@ require_once('classes/core/dataMapperFactory.php');
 //config
 $config["modelType"] = "autoGen";
 $config["connectionString"] = "mysql:host=localhost;dbname=test;username=root;";
+$config["defaultTemplateLocation"] = __DIR__ . '/templates';
 //get the URI
 $uri = isset($_SERVER['REQUEST_URI']) 
            ? $_SERVER['REQUEST_URI'] 
@@ -20,7 +21,7 @@ $request = new core\request($uri);
 //getting the view class from the request
 $viewFactory = new core\viewFactory();
 $view = $viewFactory->getView($request);
-$view->setDefaultTemplateLocation(__DIR__ . '/templates');
+$view->setDefaultTemplateLocation($config["defaultTemplateLocation"]);
 
 //getting the data mapper from the connection string
 
@@ -39,4 +40,3 @@ $controller->{$command}($request);
 
 //Produces the response
 echo $view->render();
-?>
