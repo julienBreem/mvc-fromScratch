@@ -1,12 +1,13 @@
 {
-    "name": "siwane/mvc-from-scratch",
+    "name": "siwane-ju/mvc-from-scratch",
     "description": "This is a PHP framework to automate CRUD model",
     "type": "project",
     "license": "MIT",
     "require": {},
     "autoload" : {
         "psr-4" : {
-            "mvc\\scratch\\" : "src/"
+            "base\\" : "src/",
+            "project\\" : "project/"
         }
     }
 }
