@@ -3,22 +3,16 @@ namespace base\model\entity;
 
 class EntityShaper
 {
-	
-	protected $entityFactory;
-	
-	public function __construct($entityFactory)
+	public function shape($dataMapper,$entity)
 	{
-		$this->entityFactory = $entityFactory;
-	}
-	public function shape(dataMapper $dataMapper)
-	{
-		$entity = $this->entityFactory->getEntity($name);
 		if (is_null($entity->getRepositoryName())) {
-			$entity->setRepositoryName($name);
+			$entity->setRepositoryName($entity->getName());
 			foreach($dataMapper->fetchColumns($name) as $id => $name)
 			{
 				$entity->attributes[$name] = "";
 			}
 		}
+		
+		return $entity;
 	}
 }
