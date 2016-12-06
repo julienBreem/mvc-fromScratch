@@ -1,9 +1,8 @@
 <?php
-namespace service;
-require_once("./classes/core/dataMapper.php");
-use core\dataMapper as dataMapper;
-class sqlDataMapper extends dataMapper{
-	
+namespace base\model;
+
+class SqlDataMapper extends DataMapper
+{	
 	protected $host;
 	protected $dbname;
 	protected $username;
@@ -29,7 +28,13 @@ class sqlDataMapper extends dataMapper{
 					case "options":$this->options = $value;break;
 				}
 			}
-		}		
+		}
+		$this->connect();		
+	}
+	
+	public function __destruct()
+	{
+		$this->disconnect();
 	}
 	
 	protected function connect()
@@ -53,8 +58,7 @@ class sqlDataMapper extends dataMapper{
 		$this->sql.= " (";
 		foreach($values as $key => $values)$this->sql.="'".$values."',";
 		$this->sql = substr($this->sql, 0, -1).")";
-		$this->execute();
-		return $result;
+		return $this->execute();
 	}
 	public function select( $tableName )
 	{
@@ -91,20 +95,14 @@ class sqlDataMapper extends dataMapper{
 	public function execute()
 	{
 		$this->sql.= ";";
-		$this->connect();
 		$q = $this->dbh->prepare($this->sql);
 		$q->execute();
-		$result = $q->fetch();
-		$this->disconnect();
-		return $result;
+		return $q->fetch();
 	}
 	public function fetchColumns( $tableName )
 	{
-		$this->connect();
 		$q = $this->dbh->prepare("SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='".$this->dbname."' AND `TABLE_NAME`='".$tableName."'");
 		$q->execute();
-		$result = $q->fetchAll(\PDO::FETCH_COLUMN);		
-		$this->disconnect();
-		return $result;
+		return $q->fetchAll(\PDO::FETCH_COLUMN);		
 	}
 }
