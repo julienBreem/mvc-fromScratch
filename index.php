@@ -1,13 +1,9 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
 include('config.php');
-//get the URI
-$uri = isset($_SERVER['REQUEST_URI']) 
-           ? $_SERVER['REQUEST_URI'] 
-           : '/';
-//Initializes the request abstraction from URI
 
-$request = new base\core\request($uri);
+//Initializes the request abstraction
+$request = new base\core\request();
 
 //getting the view class from the request
 $viewFactory = new base\view\ViewFactory();

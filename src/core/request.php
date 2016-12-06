@@ -8,11 +8,13 @@ class request
 	protected $controllerName = "site";
 	protected $actionName = "index";
 	
-	public function __construct( $uri )
+	public function __construct()
     {
-		$this->uri = $uri;
-		if(strpos($uri, "?")){
-			$urlString = substr($uri, strpos($uri, "?") + 1); 
+		$this->uri = isset($_SERVER['REQUEST_URI'])
+           ? $_SERVER['REQUEST_URI'] 
+           : '/';
+		if(strpos($this->uri, "?")){
+			$urlString = substr($this->uri, strpos($this->uri, "?") + 1); 
 			$urlTab = explode("&",$urlString);
 			foreach($urlTab as $param){
 				$key = explode("=",$param)[0];
