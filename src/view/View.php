@@ -1,7 +1,8 @@
 <?php
-namespace core;
-class view{
-	
+namespace base\view;
+
+class view
+{	
 	protected $css;
 	protected $js;
 	public $title;

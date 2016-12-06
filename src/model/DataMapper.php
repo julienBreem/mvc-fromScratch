@@ -1,6 +1,7 @@
 <?php
-namespace core;
-abstract class dataMapper{
+namespace base\model;
+
+abstract class DataMapper{
 	
 	abstract protected function connect();
 	abstract protected function disconnect();

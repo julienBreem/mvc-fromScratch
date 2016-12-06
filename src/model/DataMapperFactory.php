@@ -1,13 +1,14 @@
 <?php
-namespace core;
-class dataMapperFactory{
-	
+namespace base\model;
+
+class DataMapperFactory
+{	
 	protected $type;
 	protected $connectionString;
 	
-	public function __construct( $connection )
+	public function __construct( $connectionConfig )
     {
-		$temp = explode(":",$connection);
+		$temp = explode(":",$connectionConfig);
 		$this->type = $temp[0];
 		$this->connectionString = $temp[1];
 	}
@@ -17,8 +18,7 @@ class dataMapperFactory{
 		$dataMapper = null;
 		switch($this->type){
 			case "mysql":
-				require_once("./classes/service/sqlDataMapper.php");
-				$dataMapper = new \service\sqlDataMapper($this->connectionString);
+				$dataMapper = new SqlDataMapper($this->connectionString);
 				break;
 		}
 		return $dataMapper;
