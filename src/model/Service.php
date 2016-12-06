@@ -20,7 +20,6 @@ class Service
 		$this->entityFactory = new EntityFactory();
 		$entity = $this->entityFactory->getEntity($name);
 		
-		//si l'entity est "vide"
 		if(is_null($entity->getRepositoryName())){
 			$entity->setRepositoryName($name);
 			foreach($this->dataMapper->fetchColumns($name) as $id => $name){
@@ -38,7 +37,7 @@ class Service
 						->where(["id=".$id])
 						->execute();
 		foreach($entity->attributes as $id => $values){
-			if(ISSET($attributes[$id])){
+			if (isset($attributes[$id])) {
 				$entity->attributes[$id] = $attributes[$id];
 			}
 		}
