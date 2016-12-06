@@ -12,6 +12,7 @@ class EntityShaper
 				$entity->attributes[$name] = "";
 			}
 		}
+		
 		return $entity;
 	}
 }
