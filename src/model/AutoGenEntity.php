@@ -1,10 +1,8 @@
 <?php
-namespace service;
-require_once("./classes/core/model.php");
-use core\model as model;
+namespace base\model;
 
-class autoGenModel extends model{
-	
+class AutoGenEntity extends Entity
+{
 	protected $name;
 	
 	public function __construct($name)

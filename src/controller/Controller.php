@@ -1,7 +1,8 @@
 <?php
-namespace core;
-class controller{
-	
+namespace base\controller;
+
+class controller
+{	
 	protected $view;
 	protected $modelService;
 	protected $name;
@@ -24,7 +25,7 @@ class controller{
 		return $this->view;
 	}
 	public function render( $file, $models = []){
-		$this->view->setBody('./view/'.$this->name.'/'.$file.'.php');
+		$this->view->setBody('./project/view/'.$this->name.'/'.$file.'.php');
 		$this->view->setModels($models);
 	}
 }

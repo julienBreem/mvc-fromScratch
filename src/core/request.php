@@ -1,11 +1,12 @@
 <?php
-namespace core;
-class request{
-	
+namespace base\core;
+
+class request
+{
 	protected $uri;
 	protected $params;
-	protected $resourceName = "site";
-	protected $command = "index";
+	protected $controllerName = "site";
+	protected $actionName = "index";
 	
 	public function __construct( $uri )
     {
@@ -16,8 +17,8 @@ class request{
 			foreach($urlTab as $param){
 				$key = explode("=",$param)[0];
 				$value = explode("=",$param)[1];
-				if($key == "c")$this->resourceName = $value;
-				elseif($key == "a")$this->command = $value;
+				if($key == "c")$this->controllerName = $value;
+				elseif($key == "a")$this->actionName = $value;
 				else $this->params[] = [$key => $value];
 			}
 		}
@@ -27,13 +28,13 @@ class request{
 	{
 		return $this->uri;
 	}
-	public function getResourceName()
+	public function getControllerName()
 	{
-		return $this->resourceName;
+		return $this->controllerName;
 	}
-	public function getCommand()
+	public function getActionName()
 	{
-		return $this->command;
+		return $this->actionName;
 	}
 	public function getParams()
 	{

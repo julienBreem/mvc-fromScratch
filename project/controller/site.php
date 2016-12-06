@@ -1,8 +1,8 @@
 <?php
-namespace controller;
+namespace project\controller;
 
-require_once('./classes/core/controller.php');
-use core\controller as controller;
+use base\controller\controller;
+
 class site extends controller{
 	
 	public function  __construct($view, $modelService){
@@ -11,7 +11,7 @@ class site extends controller{
 	
 	public function index()
 	{
-		$model = $this->modelService->getModelById("table",1);
+		$model = $this->modelService->getEntityById("table",1);
 		// $model->attributes['column1'] = 'test';
 		$this->render('index',['model' => $model]);
 	}
