@@ -10,7 +10,6 @@ $viewFactory = new base\view\ViewFactory();
 $view = $viewFactory->getView($request);
 $view->setDefaultTemplateLocation($config["defaultTemplateLocation"]);
 
-// SERVICE::GETREPOSITORY
 //getting the data mapper from the connection string
 $dataMapperFactory = new base\model\DataMapperFactory($config["connectionString"]);
 $dataMapper = $dataMapperFactory->getDataMapper();
