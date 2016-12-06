@@ -1,5 +1,5 @@
 <?php
-namespace base\model;
+namespace base\model\entity;
 
 class EntityFactory
 {
@@ -7,7 +7,12 @@ class EntityFactory
 	
 	public function getEntity( $name )
 	{
-		$class = "project\\".$this->directory."\\".$name;
+		if(file_exists('./project/'.$this->directory.'/'.$name.'.php')){
+			$class = "project\\".$this->directory."\\".$name;
+		}
+		else{
+			$class = "base\\model\\entity\\Entity";
+		}
 		return new $class();
 	}
 	public function setDirectory($directory)

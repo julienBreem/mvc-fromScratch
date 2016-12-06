@@ -1,9 +1,8 @@
 <?php
-namespace base\model;
+namespace base\model\dataMapper;
 
 interface DataMapper
-{
-	
+{	
 	function connect();
 	function disconnect();
 	

@@ -1,6 +1,7 @@
 <?php
-$config = [
-	"modelType" => "autoGen",
-	"connectionString" => "mysql:host=localhost;dbname=test;username=root;",
+$config["view"] = [	
 	"defaultTemplateLocation" => __DIR__ . '/project/templates'
+];
+$config["model"] = [
+	"dataConnection" => "mysql:host=localhost;dbname=test;username=root;",
 ];

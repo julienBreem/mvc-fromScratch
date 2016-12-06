@@ -8,13 +8,10 @@ $request = new base\core\request();
 //getting the view class from the request
 $viewFactory = new base\view\ViewFactory();
 $view = $viewFactory->getView($request);
-$view->setDefaultTemplateLocation($config["defaultTemplateLocation"]);
+$view->setDefaultTemplateLocation($config["view"]["defaultTemplateLocation"]);
 
-//getting the data mapper from the connection string
-$dataMapperFactory = new base\model\DataMapperFactory($config["connectionString"]);
-$dataMapper = $dataMapperFactory->getDataMapper();
 
-$modelService = new base\model\Service($dataMapper,$config["modelType"]);
+$modelService = new base\model\Service($config["model"]);
 
 //getting controller and feeding it the view, the request and the modelFactory.
 $controllerFactory = new base\controller\ControllerFactory();
