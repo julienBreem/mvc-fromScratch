@@ -2,12 +2,12 @@
 namespace base\model;
 
 use base\model\entity\EntityFactory;
+use base\model\entity\EntityShaper;
 use base\model\dataMapper\DataMapperFactory;
 
 class Service
 {	
 	protected $dataMapper;
-	protected $entityFactory;
 	
 	public function __construct($modelConfig)
     {
@@ -17,17 +17,8 @@ class Service
 	
 	public function buildEntity( $name )
 	{
-		$this->entityFactory = new EntityFactory();
-		$entity = $this->entityFactory->getEntity($name);
-		
-		if(is_null($entity->getRepositoryName())){
-			$entity->setRepositoryName($name);
-			foreach($this->dataMapper->fetchColumns($name) as $id => $name){
-				$entity->attributes[$name] = "";
-			}
-		}		
-		
-		return $entity;
+		$shaper = new EntityShaper(new EntityFactory());		
+		return $shaper->shape($this->dataMapper);
 	}
 	public function getEntityById( $modelName,$id )
 	{
@@ -36,7 +27,8 @@ class Service
 						->select($entity->getRepositoryName())
 						->where(["id=".$id])
 						->execute();
-		foreach($entity->attributes as $id => $values){
+		foreach($entity->attributes as $id => $values)
+		{
 			if (isset($attributes[$id])) {
 				$entity->attributes[$id] = $attributes[$id];
 			}

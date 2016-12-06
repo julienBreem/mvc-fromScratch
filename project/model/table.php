@@ -5,7 +5,6 @@ use base\model\entity\Entity;
 
 class Table extends Entity
 {
-	
 	protected $name = "table";
 	protected $repositoryName = "table";
 	
