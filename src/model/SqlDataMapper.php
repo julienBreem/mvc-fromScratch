@@ -1,7 +1,7 @@
 <?php
 namespace base\model;
 
-class SqlDataMapper extends DataMapper
+class SqlDataMapper implements DataMapper
 {	
 	protected $host;
 	protected $dbname;
@@ -37,12 +37,12 @@ class SqlDataMapper extends DataMapper
 		$this->disconnect();
 	}
 	
-	protected function connect()
+	public function connect()
 	{
 		$this->dbh = new \PDO('mysql:host='.$this->host.';dbname='.$this->dbname, $this->username, $this->password);
 	}
 	
-	protected function disconnect()
+	public function disconnect()
 	{
 		$this->dbh = null;
 	}

@@ -1,7 +1,7 @@
 <?php
 namespace base\view;
 
-class viewFactory
+class ViewFactory
 {	
 	protected $directory = "view";
 	

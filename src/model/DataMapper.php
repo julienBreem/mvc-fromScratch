@@ -1,17 +1,18 @@
 <?php
 namespace base\model;
 
-abstract class DataMapper{
+interface DataMapper
+{
 	
-	abstract protected function connect();
-	abstract protected function disconnect();
+	function connect();
+	function disconnect();
 	
-	abstract protected function fetchColumns( $tableName );
+	function fetchColumns( $tableName );
 	
-	abstract protected function insert( $tableName, $values );
-	abstract protected function select( $tableName );
-	abstract protected function update( $tableName, $values );
-	abstract protected function delete( $tableName );
-	abstract protected function where( $conditions );
-	abstract protected function limit( $limit );
+	function insert( $tableName, $values );
+	function select( $tableName );
+	function update( $tableName, $values );
+	function delete( $tableName );
+	function where( $conditions );
+	function limit( $limit );
 }

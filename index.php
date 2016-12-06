@@ -25,5 +25,4 @@ $command = $request->getActionName();
 $controller->{$command}($request);
 
 //Produces the response
-// CONTROLLER::PROCESSRESPONSE
 echo $view->render();

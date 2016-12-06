@@ -1,7 +1,7 @@
 <?php
 namespace base\view;
 
-class view
+class View
 {	
 	protected $css;
 	protected $js;
