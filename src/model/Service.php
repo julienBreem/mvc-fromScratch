@@ -17,8 +17,9 @@ class Service
 	
 	public function buildEntity( $name )
 	{
-		$shaper = new EntityShaper(new EntityFactory());		
-		return $shaper->shape($this->dataMapper);
+		$entityFactory = new EntityFactory();
+		$shaper = new EntityShaper();	
+		return $shaper->shape($this->dataMapper,$entityFactory->getEntity($name));
 	}
 	public function getEntityById( $modelName,$id )
 	{
