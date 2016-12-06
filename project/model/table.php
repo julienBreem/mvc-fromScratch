@@ -3,8 +3,8 @@ namespace project\model;
 
 use base\model\entity\Entity;
 
-class Table extends Entity{
-	
+class Table extends Entity
+{
 	protected $name = "table";
 	protected $repositoryName = "table";
 	

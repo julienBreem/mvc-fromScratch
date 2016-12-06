@@ -7,15 +7,17 @@ class EntityFactory
 	
 	public function getEntity( $name )
 	{
-		if(file_exists('./project/'.$this->directory.'/'.$name.'.php')){
+		if (file_exists('./project/'.$this->directory.'/'.$name.'.php')) {
 			$class = "project\\".$this->directory."\\".$name;
 		}
 		else{
 			$class = "base\\model\\entity\\Entity";
 		}
-		return new $class();
+		$entity = new $class();
+		if ( $entity instanceof Entity) return $entity;
+		// else echo "entityError";exit;
 	}
-	public function setDirectory($directory)
+	public function setDirectory( $directory )
 	{
 		$this->directory = $directory;
 	}
