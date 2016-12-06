@@ -1,13 +1,12 @@
 <?php
 
-namespace mvc\scratch\core;
+namespace base\core;
 
 class Request
 {
     protected $uri;
-
-    protected $entity = null;
-    protected $action;
+	protected $controllerName = "site";
+	protected $actionName = "index";
     protected $params = [];
 
     public function __construct()
@@ -23,30 +22,24 @@ class Request
                 $key = explode("=",$param)[0];
                 $value = explode("=",$param)[1];
                 if ($key == "c") {
-                    $this->controller = $value;
+                    $this->controllerName = $value;
                 } elseif ($key == "a") {
-                    $this->action = $value;
+                    $this->actionName = $value;
                 } else {
                     $this->params[$key] = $value;
                 }
             }
         }
-
-        var_dump($this->uri);
-        echo PHP_EOL . ' - - - - '  . PHP_EOL;
-        var_dump($this->controller);
-        var_dump($this->action);
-        var_dump($this->params);
     }
 
-    public function getEntity()
+    public function getControllerName()
     {
-        return $this->entity;
+        return $this->controllerName;
     }
 
-    public function getAction()
+    public function getActionName()
     {
-        return $this->action;
+        return $this->actionName;
     }
 
     public function getParams()
