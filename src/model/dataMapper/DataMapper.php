@@ -2,8 +2,7 @@
 namespace base\model\dataMapper;
 
 interface DataMapper
-{
-	
+{	
 	function connect();
 	function disconnect();
 	
