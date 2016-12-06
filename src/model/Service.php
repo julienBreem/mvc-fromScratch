@@ -7,22 +7,23 @@ class Service
 	protected $entityFactory;
 	protected $entityType;
 	
-	public function __construct($dataMapper,$entityType)
+	public function __construct($modelConfig)
     {
-		$this->dataMapper = $dataMapper;
-		$this->entityType = $entityType;
+		$dataMapperFactory = new dataMapper\DataMapperFactory($modelConfig["dataConnection"]);
+		$this->dataMapper = $dataMapperFactory->getDataMapper();
+		$this->entityType = $modelConfig["entityType"];
 	}
 	
 	public function buildEntity( $name ){
 		switch($this->entityType){
 			case "autoGen":
-				$this->entityFactory = new AutoGenEntityFactory();
+				$this->entityFactory = new entity\AutoGenEntityFactory();
 				$attributes = "";
 				foreach($this->dataMapper->fetchColumns($name) as $id => $name)$attributes[$name] = "";
 				return $this->entityFactory->getEntity($name,$attributes);
 				break;
 			case "normal":
-				$this->entityFactory = new EntityFactory();
+				$this->entityFactory = new entity\EntityFactory();
 				return $this->entityFactory->getEntity($name);
 				break;
 		}

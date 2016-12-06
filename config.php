@@ -1,8 +1,8 @@
 <?php
-$config["vue"] = [	
+$config["view"] = [	
 	"defaultTemplateLocation" => __DIR__ . '/project/templates'
 ];
 $config["model"] = [
-	"modelType" => "autoGen",
+	"entityType" => "autoGen",
 	"dataConnection" => "mysql:host=localhost;dbname=test;username=root;",
 ];

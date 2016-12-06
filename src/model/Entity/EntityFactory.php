@@ -1,5 +1,5 @@
 <?php
-namespace base\model;
+namespace base\model\entity;
 
 class EntityFactory
 {
