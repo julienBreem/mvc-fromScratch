@@ -1,6 +1,10 @@
 <?php
 namespace base\model;
 
+use base\model\entity\AutoGenEntityFactory;
+use base\model\entity\EntityFactory;
+use base\model\dataMapper\DataMapperFactory;
+
 class Service
 {	
 	protected $dataMapper;
@@ -9,21 +13,22 @@ class Service
 	
 	public function __construct($modelConfig)
     {
-		$dataMapperFactory = new dataMapper\DataMapperFactory($modelConfig["dataConnection"]);
+		$dataMapperFactory = new DataMapperFactory($modelConfig["dataConnection"]);
 		$this->dataMapper = $dataMapperFactory->getDataMapper();
 		$this->entityType = $modelConfig["entityType"];
 	}
 	
 	public function buildEntity( $name ){
+		
 		switch($this->entityType){
 			case "autoGen":
-				$this->entityFactory = new entity\AutoGenEntityFactory();
+				$this->entityFactory = new AutoGenEntityFactory();
 				$attributes = "";
 				foreach($this->dataMapper->fetchColumns($name) as $id => $name)$attributes[$name] = "";
 				return $this->entityFactory->getEntity($name,$attributes);
 				break;
 			case "normal":
-				$this->entityFactory = new entity\EntityFactory();
+				$this->entityFactory = new EntityFactory();
 				return $this->entityFactory->getEntity($name);
 				break;
 		}
