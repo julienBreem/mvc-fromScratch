@@ -3,7 +3,7 @@ namespace base\model\entity;
 
 class Entity
 {
-	public $attributes;
+	protected $attributes;
 	protected $name;
 	protected $repositoryName = null;
 	
@@ -23,4 +23,20 @@ class Entity
 	{
 		$this->name = $name;
 	}
+	public function getAttributes()
+	{
+		return $this->attributes;
+	}
+	public function setAttributes($attributes)
+	{
+		$this->attributes = $attributes;
+	}
+	public function getAttribute($id)
+    {
+        return $this->attributes[$id];
+    }
+    public function setAttribute($id,$value)
+    {
+        $this->attributes[$id] = $value;
+    }
 }
