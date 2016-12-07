@@ -27,5 +27,6 @@ class EntityShaperFactory
         if ($this->shapingTool instanceof DataMapper) {
             return new DataMappingEntityShaper($this->shapingTool);
         }
+        else return new EntityShaper();
     }
 }
