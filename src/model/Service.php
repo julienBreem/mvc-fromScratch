@@ -8,11 +8,13 @@ use base\model\dataMapper\DataMapperFactory;
 class Service
 {	
 	protected $dataMapper;
-	
+	protected $entityFactory;
+
 	public function __construct($modelConfig)
     {
 		$dataMapperFactory = new DataMapperFactory($modelConfig["dataConnection"]);
 		$this->dataMapper = $dataMapperFactory->getDataMapper();
+		$this->entityFactory = new EntityFactory($modelConfig["namespace"]);
 	}
 
     /**
@@ -25,10 +27,8 @@ class Service
      */
     public function buildEntity($name)
 	{
-		$entityFactory = new EntityFactory();
         $shaperFactory = new EntityShaperFactory($this->dataMapper);
-        $shaper = $shaperFactory->getEntityShaper();
-        return $shaper->shape($entityFactory->getEntity($name));
+        return $shaperFactory->getEntityShaper()->shape($this->entityFactory->getEntity($name));
 	}
 
     /**

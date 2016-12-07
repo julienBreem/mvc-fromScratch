@@ -9,6 +9,7 @@ namespace base\model\entity;
  */
 class Entity
 {
+    //protected $shaper =
     /**
      * Attributes bag
      *
@@ -36,12 +37,12 @@ class Entity
      *
      * @param string $name
      */
+
     public function __construct($name)
     {
         $this->name = $name;
         $this->repositoryName = $name;
     }
-
     /**
      * Return the repository name of $this entity
      *

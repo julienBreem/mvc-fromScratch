@@ -1,7 +1,6 @@
 <?php
 namespace base\model\entity\shaper;
 
-
 use base\model\entity\Entity;
 use base\model\dataMapper\DataMapper;
 /**
@@ -20,11 +19,9 @@ class DataMappingEntityShaper extends EntityShaper
     public function shape(Entity $entity)
 	{
         if (! $entity->hasAttributes()) {
-            $attributes = [];
-		    foreach ($this->dataMapper->fetchColumns($entity->getRepositoryName()) as $id => $name) {
-                $attributes[$name] = "";
+		    foreach ($this->dataMapper->fetchColumns($entity->getRepositoryName()) as $key) {
+                $entity->setAttribute($key,"");
             }
-            $entity->setAttributes($attributes);
         }
 		return $entity;
 	}

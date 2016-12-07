@@ -8,7 +8,12 @@ class EntityFactory
      *
      * @var string
      */
-	protected $namespace = 'project\\model';
+	protected $namespace;
+
+	public function __construct($namespace)
+    {
+        $this->namespace = $namespace;
+    }
 
     /**
      * Factory method to build an entity based on name
