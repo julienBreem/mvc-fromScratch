@@ -6,7 +6,7 @@ class SqlDataMapper implements DataMapper
 	protected $host;
 	protected $dbname;
 	protected $username;
-	protected $password = '12345678';
+	protected $password = '';
 	protected $options;
 	
 	protected $dbh;
