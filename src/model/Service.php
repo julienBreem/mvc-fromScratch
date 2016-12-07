@@ -2,7 +2,8 @@
 namespace base\model;
 
 use base\model\entity\EntityFactory;
-use base\model\entity\EntityShaperFactory;
+use base\model\entity\Entity;
+use base\model\entity\shaper\EntityShaperFactory;
 use base\model\dataMapper\DataMapperFactory;
 
 class Service
@@ -18,7 +19,7 @@ class Service
     /**
      *
      * The purpose of this function is building the right
-     * entity and shape it
+     * entity and shape it if necessary
      *
      * @param $name The className or the Name of the entity to build
      * @return mixed
@@ -26,9 +27,13 @@ class Service
     public function buildEntity($name)
 	{
 		$entityFactory = new EntityFactory();
-		$shaperFactory = new EntityShaperFactory($this->dataMapper);
-		$shaper = $shaperFactory->getEntityShaper();
-		return $shaper->shape($entityFactory->getEntity($name));
+		$entity = $entityFactory->getEntity($name);
+        if (!$this->isShaped($entity)) {
+            $shaperFactory = new EntityShaperFactory($this->dataMapper);
+            $shaper = $shaperFactory->getEntityShaper();
+            $entity = $shaper->shape($entity);
+        }
+		return $entity;
 	}
 
     /**
@@ -54,6 +59,11 @@ class Service
 			}
 		}
 		return $entity;
-	}	
+	}
+
+	public function isShaped(Entity $entity)
+    {
+        return (is_array($entity->getAttributes()) and count($entity->getAttributes())>0);
+    }
 	
 }

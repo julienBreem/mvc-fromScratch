@@ -6,7 +6,7 @@
  * Time: 10:34
  */
 
-namespace base\model\entity;
+namespace base\model\entity\shaper;
 
 use base\model\dataMapper\DataMapper;
 
