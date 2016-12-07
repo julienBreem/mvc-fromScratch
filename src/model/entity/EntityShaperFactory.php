@@ -20,7 +20,7 @@ class EntityShaperFactory
     }
 
     /**
-     * @return DataMappingEntityShaper
+     * @return EntityShaper
      */
     public function getEntityShaper()
     {
