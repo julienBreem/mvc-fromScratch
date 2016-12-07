@@ -3,23 +3,60 @@ namespace base\model\entity;
 
 class EntityFactory
 {
-	protected $directory = "model";
-	
-	public function getEntity( $name )
+    /**
+     * Default namespace for entity
+     *
+     * @var string
+     */
+	protected $namespace = 'project\\model';
+
+    /**
+     * Factory method to build an entity based on name
+     * If built entity is not a child of Entity, default entity is returned
+     *
+     * @param $name
+     * @return Entity
+     */
+	public function getEntity($name)
 	{
-		if (file_exists('./project/'.$this->directory.'/'.$name.'.php')) {
-			$class = "project\\".$this->directory."\\".$name;
-		}
-		else{
-			$class = "base\\model\\entity\\entity";
-		}
-		$entity = new $class();
-		if ( $entity instanceof Entity) return $entity;
-		// else echo "entityError";exit;
+        $className = $this->buildEntityClassName($name);
+        if (! is_a($className, Entity::class, true)) {
+            $className = $this->getDefaultEntityClassName();
+        }
+
+        return new $className($name);
 	}
-	public function setDirectory( $directory )
+
+    /**
+     * Allow to change directory namespace
+     *
+     * @param string $namespace
+     */
+	public function setNamespace($namespace)
 	{
-		$this->directory = $directory;
+		$this->namespace = $namespace;
 	}
+
+    /**
+     * Build an entity className based on a name
+     *
+     * @param $name
+     * @return string
+     */
+	protected function buildEntityClassName($name)
+    {
+        $namespace = rtrim($name, '/\\') . '\\';
+        return $namespace .$name;
+    }
+
+    /**
+     * Return the default className for an entity
+     *
+     * @return string
+     */
+	protected function getDefaultEntityClassName()
+    {
+        return Entity::class;
+    }
 }
 

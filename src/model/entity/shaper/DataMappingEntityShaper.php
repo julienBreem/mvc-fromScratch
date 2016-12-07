@@ -19,10 +19,7 @@ class DataMappingEntityShaper extends EntityShaper
 
     public function shape(Entity $entity)
 	{
-		if (is_null($entity->getRepositoryName())) {
-            $entity->setRepositoryName($entity->getName());
-        }
-        if (!is_array($entity->getAttributes()) or count($entity->getAttributes())==0) {
+        if (! $entity->hasAttributes()) {
             $attributes = [];
 		    foreach ($this->dataMapper->fetchColumns($entity->getRepositoryName()) as $id => $name) {
                 $attributes[$name] = "";
