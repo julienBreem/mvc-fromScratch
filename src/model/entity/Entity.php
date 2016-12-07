@@ -39,6 +39,7 @@ class Entity
     public function __construct($name)
     {
         $this->name = $name;
+        $this->repositoryName = $name;
     }
 
     /**
@@ -49,7 +50,7 @@ class Entity
      */
     public function getRepositoryName()
 	{
-		return is_null($this->repositoryName) ? $this->name : $this->repositoryName;
+		return $this->repositoryName;
 	}
 
     /**
