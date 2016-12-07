@@ -45,7 +45,7 @@ class EntityFactory
      */
 	protected function buildEntityClassName($name)
     {
-        $namespace = rtrim($name, '/\\') . '\\';
+        $namespace = rtrim($this->namespace, '/\\') . '\\';
         return $namespace .$name;
     }
 
