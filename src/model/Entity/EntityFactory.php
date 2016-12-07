@@ -11,7 +11,7 @@ class EntityFactory
 			$class = "project\\".$this->directory."\\".$name;
 		}
 		else{
-			$class = "base\\model\\entity\\Entity";
+			$class = "base\\model\\entity\\entity";
 		}
 		$entity = new $class();
 		if ( $entity instanceof Entity) return $entity;
