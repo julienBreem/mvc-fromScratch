@@ -11,15 +11,11 @@ namespace base\model\entity\shaper;
 use base\model\entity\Entity;
 
 
-interface EntityShaper
+class EntityShaper implements EntityShaperInterface
 {
-    /**
-     *
-     * Ensure the entity gets everything it needs
-     * ( id, attributes, validation rules, etc )
-     *
-     * @param Entity $entity
-     * @return Entity
-     */
-    public function shape(Entity $entity);
+
+    public function shape(Entity $entity)
+    {
+        return $entity;
+    }
 }

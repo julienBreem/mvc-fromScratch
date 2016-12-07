@@ -12,15 +12,15 @@ class EntityFactory
 
     /**
      * Factory method to build an entity based on name
+     * If built entity is not a child of Entity, default entity is returned
      *
      * @param $name
      * @return Entity
      */
 	public function getEntity($name)
 	{
-        if (is_a($this->buildEntityClassName($name), Entity::class, true)) {
-            $className = $this->buildEntityClassName($name);
-        } else {
+        $className = $this->buildEntityClassName($name);
+        if (! is_a($className, Entity::class, true)) {
             $className = $this->getDefaultEntityClassName();
         }
 
