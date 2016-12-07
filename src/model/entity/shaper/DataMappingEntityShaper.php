@@ -3,15 +3,16 @@ namespace base\model\entity\shaper;
 
 
 use base\model\entity\Entity;
+use base\model\dataMapper\DataMapper;
 /**
  * Class DataMappingEntityShaper
  * @package base\model\entity
  */
-class DataMappingEntityShaper implements EntityShaper
+class DataMappingEntityShaper extends EntityShaper
 {
     protected $dataMapper;
 
-    public function __construct($dataMapper)
+    public function __construct(DataMapper $dataMapper)
     {
         $this->dataMapper = $dataMapper;
     }
