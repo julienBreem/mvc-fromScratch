@@ -27,13 +27,9 @@ class Service
     public function buildEntity($name)
 	{
 		$entityFactory = new EntityFactory();
-		$entity = $entityFactory->getEntity($name);
-        if (!$this->isShaped($entity)) {
-            $shaperFactory = new EntityShaperFactory($this->dataMapper);
-            $shaper = $shaperFactory->getEntityShaper();
-            $entity = $shaper->shape($entity);
-        }
-		return $entity;
+        $shaperFactory = new EntityShaperFactory($this->dataMapper);
+        $shaper = $shaperFactory->getEntityShaper();
+        return $shaper->shape($entityFactory->getEntity($name));
 	}
 
     /**
@@ -48,22 +44,17 @@ class Service
     public function getEntityById($entityName, $id)
 	{
 		$entity = $this->buildEntity($entityName);
-		$attributes = $this->dataMapper
+		$data = $this->dataMapper
 						->select($entity->getRepositoryName())
 						->where(["id=".$id])
 						->execute();
-		foreach($entity->attributes as $id => $values)
+		foreach($entity->getAttributes() as $id => $values)
 		{
-			if (isset($attributes[$id])) {
-				$entity->attributes[$id] = $attributes[$id];
+			if (isset($data[$id])) {
+				$entity->setAttribute($id,$data[$id]);
 			}
 		}
 		return $entity;
 	}
-
-	public function isShaped(Entity $entity)
-    {
-        return (is_array($entity->getAttributes()) and count($entity->getAttributes())>0);
-    }
 	
 }

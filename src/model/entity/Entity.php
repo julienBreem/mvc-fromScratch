@@ -31,4 +31,12 @@ class Entity
 	{
 		$this->attributes = $attributes;
 	}
+	public function getAttribute($id)
+    {
+        return $this->attributes[$id];
+    }
+    public function setAttribute($id,$value)
+    {
+        $this->attributes[$id] = $value;
+    }
 }

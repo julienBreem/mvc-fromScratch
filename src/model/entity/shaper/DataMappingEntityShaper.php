@@ -21,7 +21,7 @@ class DataMappingEntityShaper implements EntityShaper
 		if (is_null($entity->getRepositoryName())) {
             $entity->setRepositoryName($entity->getName());
         }
-        if (!is_array($entity) or count($entity)==0) {
+        if (!is_array($entity->getAttributes()) or count($entity->getAttributes())==0) {
             $attributes = [];
 		    foreach ($this->dataMapper->fetchColumns($entity->getRepositoryName()) as $id => $name) {
                 $attributes[$name] = "";
