@@ -14,8 +14,12 @@ class Service
 		$dataMapperFactory = new DataMapperFactory($modelConfig["dataConnection"]);
 		$this->dataMapper = $dataMapperFactory->getDataMapper();
 	}
-	
-	public function buildEntity( $name )
+
+    /**
+     * @param $name
+     * @return mixed
+     */
+    public function buildEntity($name )
 	{
 		$entityFactory = new EntityFactory();
 		$shaper = new EntityShaper();	
