@@ -7,7 +7,7 @@ class EntityShaper
 	{
 		if (is_null($entity->getRepositoryName())) {
 			$entity->setRepositoryName($entity->getName());
-			foreach($dataMapper->fetchColumns($name) as $id => $name)
+			foreach($dataMapper->fetchColumns($entity->getRepositoryName()) as $id => $name)
 			{
 				$entity->attributes[$name] = "";
 			}
