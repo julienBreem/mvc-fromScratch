@@ -38,7 +38,7 @@ class Entity
      * @param string $name
      */
 
-    public function __construct($name)
+    public function __construct($name,$shape)
     {
         $this->name = $name;
         $this->repositoryName = $name;

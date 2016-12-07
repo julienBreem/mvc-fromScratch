@@ -22,14 +22,14 @@ class EntityFactory
      * @param $name
      * @return Entity
      */
-	public function getEntity($name)
+	public function getEntity($name,$shape)
 	{
         $className = $this->buildEntityClassName($name);
         if (! is_a($className, Entity::class, true)) {
             $className = $this->getDefaultEntityClassName();
         }
 
-        return new $className($name);
+        return new $className($name,$shape);
 	}
 
     /**
