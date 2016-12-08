@@ -6,8 +6,7 @@ use base\model\entity\Entity;
 class Table extends Entity
 {
 	protected $name = "table";
-	protected $repositoryName = "table";
-	
+
 	public $attributes = [
 		"id" => "",
 		"column1" => "col1",

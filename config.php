@@ -5,4 +5,10 @@ $config["view"] = [
 $config["model"] = [
 	"dataConnection" => "mysql:host=localhost;dbname=test;username=root;",
     "namespace" => "project\\model",
+    "entities" => [
+        "table" => [
+            "repositoryName" => "table",
+            "autoComplete" => true,
+        ],
+    ],
 ];

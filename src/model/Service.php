@@ -2,19 +2,24 @@
 namespace base\model;
 
 use base\model\entity\EntityFactory;
-use base\model\entity\shaper\EntityShaperFactory;
+use base\model\entity\shape\ShapeFactory;
 use base\model\dataMapper\DataMapperFactory;
 
 class Service
-{	
+{
+    protected $modelConfig;
 	protected $dataMapper;
 	protected $entityFactory;
 
 	public function __construct($modelConfig)
     {
-		$dataMapperFactory = new DataMapperFactory($modelConfig["dataConnection"]);
+        $this->modelConfig = $modelConfig;
+		$dataMapperFactory = new DataMapperFactory($this->modelConfig['dataConnection']);
 		$this->dataMapper = $dataMapperFactory->getDataMapper();
-		$this->entityFactory = new EntityFactory($modelConfig["namespace"]);
+		$this->entityFactory = new EntityFactory();
+		if (! empty($this->modelConfig['namespace'])) {
+		    $this->entityFactory->setNamespace($this->modelConfig['namespace']);
+        }
 	}
 
     /**
@@ -22,13 +27,17 @@ class Service
      * The purpose of this function is building the right
      * entity and shape it if necessary
      *
-     * @param $name string The className or the Name of the entity to build
+     * @param $entityName string The className or the Name of the entity to build
      * @return mixed
      */
-    public function buildEntity($name)
+    public function buildEntity($entityName)
 	{
-        $shaperFactory = new EntityShaperFactory($this->dataMapper);
-        return $shaperFactory->getEntityShaper()->shape($this->entityFactory->getEntity($name));
+        $shape = null;
+	    if ($this->modelConfig['entities'][$entityName]['autoComplete']) {
+            $shaperFactory = new ShapeFactory();
+            $shape = $shaperFactory->getShape($this->dataMapper,$this->modelConfig['entities'][$entityName]['repositoryName']);
+        }
+        return $this->entityFactory->getEntity($entityName,$shape);
 	}
 
     /**
@@ -44,7 +53,7 @@ class Service
 	{
 		$entity = $this->buildEntity($entityName);
 		$data = $this->dataMapper
-						->select($entity->getRepositoryName())
+						->select($this->modelConfig['entities'][$entityName]['repositoryName'])
 						->where(["id=".$id])
 						->execute();
 		foreach($entity->getAttributes() as $id => $values)

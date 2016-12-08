@@ -9,7 +9,7 @@ namespace base\model\entity;
  */
 class Entity
 {
-    //protected $shaper =
+
     /**
      * Attributes bag
      *
@@ -25,45 +25,15 @@ class Entity
 	protected $name;
 
     /**
-     * The repository name associated to $this entity
-     *
-     * @todo Move it to a repositoryFactory
-     * @var string
-     */
-	protected $repositoryName = null;
-
-    /**
      * Entity constructor.
      *
      * @param string $name
      */
 
-    public function __construct($name,$shape)
+    public function __construct($name)
     {
         $this->name = $name;
-        $this->repositoryName = $name;
     }
-    /**
-     * Return the repository name of $this entity
-     *
-     * @todo Move it to a repositoryFactory
-     * @return string
-     */
-    public function getRepositoryName()
-	{
-		return $this->repositoryName;
-	}
-
-    /**
-     * Set the repository name of $this entity
-     *
-     * @todo Move it to a repositoryFactory
-     * @param $repositoryName
-     */
-	public function setRepositoryName($repositoryName)
-	{
-		$this->repositoryName = $repositoryName;
-	}
 
     /**
      * Return the name of $this entity
@@ -127,7 +97,7 @@ class Entity
      * @param $value
      * @return Entity
      */
-    public function setAttribute($key, $value)
+    public function setAttribute($key, $value = null)
     {
         if ($this->isValidKey($key)) {
             $this->attributes[$key] = $value;
