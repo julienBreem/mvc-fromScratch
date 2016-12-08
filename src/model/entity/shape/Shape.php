@@ -11,5 +11,11 @@ namespace base\model\entity\shape;
 
 class Shape
 {
+    /**
+     *
+     * attribute bag
+     *
+     * @var array
+     */
     public $attributes = [];
 }

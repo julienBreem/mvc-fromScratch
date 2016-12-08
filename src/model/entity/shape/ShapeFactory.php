@@ -13,6 +13,10 @@ use base\model\dataMapper\DataMapper;
 class ShapeFactory
 {
     /**
+     *
+     * get a shape depending on which shapingTool was passed
+     * and configure that shape from the right repository
+     *
      * @return Shape
      */
     public function getShape($shapingTool,$repositoryName)
