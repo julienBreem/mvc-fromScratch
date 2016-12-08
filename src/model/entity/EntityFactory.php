@@ -33,7 +33,6 @@ class EntityFactory
             foreach($shape->attributes as $key) {
                 $entity->setAttribute($key);
             }
-
         }
 
         return $entity;

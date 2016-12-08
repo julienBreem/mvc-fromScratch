@@ -12,5 +12,4 @@ namespace base\model\entity\shape;
 class Shape
 {
     public $attributes = [];
-    public $repositoryName;
 }
