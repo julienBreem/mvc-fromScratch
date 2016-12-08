@@ -1,6 +1,8 @@
 <?php
 namespace base\model\entity;
 
+use base\model\entity\shape\Shape;
+
 class EntityFactory
 {
     /**
@@ -8,12 +10,8 @@ class EntityFactory
      *
      * @var string
      */
-	protected $namespace;
+	protected $namespace = 'project\\model';
 
-	public function __construct($namespace)
-    {
-        $this->namespace = $namespace;
-    }
 
     /**
      * Factory method to build an entity based on name
@@ -22,14 +20,22 @@ class EntityFactory
      * @param $name
      * @return Entity
      */
-	public function getEntity($name,$shape)
+	public function getEntity($name,$shape = null)
 	{
         $className = $this->buildEntityClassName($name);
         if (! is_a($className, Entity::class, true)) {
             $className = $this->getDefaultEntityClassName();
         }
 
-        return new $className($name,$shape);
+        $entity = new $className($name);
+
+        if ($shape instanceof Shape) {
+            foreach($shape->attributes as $key) {
+                $entity->setAttribute($key);
+            }
+        }
+
+        return $entity;
 	}
 
     /**

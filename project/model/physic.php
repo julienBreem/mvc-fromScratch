@@ -3,9 +3,9 @@ namespace project\model;
 
 use base\model\entity\Entity;
 
-class Table extends Entity
+class physic extends Entity
 {
-	protected $name = "table";
+	protected $name = "physic";
 
 	public $attributes = [
 		"id" => "",

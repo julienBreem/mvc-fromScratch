@@ -3,9 +3,9 @@ namespace project\model;
 
 use base\model\entity\Entity;
 
-class Table extends Entity
+class physicAutoCompleted extends Entity
 {
-	protected $name = "table";
+	protected $name = "physicAutoCompleted";
 
 	public $attributes = [
 		"id" => "",
