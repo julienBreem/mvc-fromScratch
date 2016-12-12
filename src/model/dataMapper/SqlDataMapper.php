@@ -1,7 +1,9 @@
 <?php
 namespace base\model\dataMapper;
 
-class SqlDataMapper implements DataMapper
+use base\model\hydrant\dataMapperHydrant;
+
+class SqlDataMapper extends dataMapperhydrant implements DataMapper
 {	
 	protected $host;
 	protected $dbname;
