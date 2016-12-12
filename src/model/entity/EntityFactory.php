@@ -1,8 +1,6 @@
 <?php
 namespace base\model\entity;
 
-use base\model\entity\shape\Shape;
-
 class EntityFactory
 {
     /**
@@ -20,22 +18,13 @@ class EntityFactory
      * @param $name
      * @return Entity
      */
-	public function getEntity($name,$shape = null)
+	public function getEntity($name)
 	{
         $className = $this->buildEntityClassName($name);
         if (! is_a($className, Entity::class, true)) {
             $className = $this->getDefaultEntityClassName();
         }
-
-        $entity = new $className($name);
-
-        if ($shape instanceof Shape) {
-            foreach($shape->attributes as $key) {
-                $entity->setAttribute($key);
-            }
-        }
-
-        return $entity;
+        return new $className($name);
 	}
 
     /**

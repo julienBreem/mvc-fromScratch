@@ -2,7 +2,6 @@
 namespace base\model;
 
 use base\model\entity\EntityFactory;
-use base\model\entity\shape\ShapeFactory;
 use base\model\dataMapper\DataMapperFactory;
 
 class Service
@@ -25,19 +24,18 @@ class Service
     /**
      *
      * The purpose of this function is building the right
-     * entity and shape it if necessary
+     * entity and hydrate it if necessary
      *
      * @param $entityName string The className or the Name of the entity to build
      * @return mixed
      */
     public function buildEntity($entityName)
-	{
-        $shape = null;
+    {
+        $entity = $this->entityFactory->getEntity($entityName);
 	    if ($this->modelConfig['entities'][$entityName]['autoComplete']) {
-            $shaperFactory = new ShapeFactory();
-            $shape = $shaperFactory->getShape($this->dataMapper,$this->modelConfig['entities'][$entityName]['repositoryName']);
+            $this->dataMapper->hydrate($entity,$this->modelConfig['entities'][$entityName]['repositoryName']);
         }
-        return $this->entityFactory->getEntity($entityName,$shape);
+        return $entity;
 	}
 
     /**
