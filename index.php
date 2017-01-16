@@ -4,14 +4,7 @@ include('config.php');
 
 //Initializes the request abstraction
 //$request = new base\core\request();
-$request = new GuzzleHttp\Psr7\ServerRequest(
-    $_SERVER['REQUEST_METHOD'],
-    $_SERVER['REQUEST_URI'],
-    getallheaders(),
-    stream_get_contents(STDIN),
-    $_SERVER['SERVER_PROTOCOL'],
-    $_SERVER
-);
+$request = new base\core\http\Request();
 
 //getting the view class from the request
 $viewFactory = new base\view\ViewFactory();
