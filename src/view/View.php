@@ -3,34 +3,12 @@ namespace base\view;
 
 use base\core\http\appResponse;
 
-class View extends appResponse
-{	
-	protected $css;
-	protected $js;
-	public $title;
-	
-	protected $header;
-	protected $body;
-	protected $footer;
-	protected $templateLocation;
+abstract class View extends appResponse
+{
 	protected $models;
-	
-	public function setDefaultTemplateLocation( $templateLocation ){
-		$this->header = $templateLocation."/header.php";
-		$this->footer = $templateLocation."/footer.php";
-	}
-	
-	public function setBody( $body ){
-		$this->body = $body;
-	}
 	
 	public function setModels( $models ){
 		$this->models = $models;
 	}
-	
-	public function render(){
-		include($this->header);
-		if($this->body!="")include($this->body);
-		include($this->footer);
-	}
+    abstract public function render();
 }

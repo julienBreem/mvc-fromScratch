@@ -28,7 +28,7 @@ class Factory
 {
     protected $namespace;
     protected $defaultClassName;
-
+    protected $mainClass;
     /**
      * Factory method to build a class name
      * If built class is not a child of $defaultClassName, default class is $defaultClassName
@@ -39,7 +39,7 @@ class Factory
     public function getClassName($name)
     {
         $className = $this->buildClassName($name);
-        if (! is_a($className, $this->getDefaultClassName(), true)) {
+        if (! is_a($className, $this->getMainCLass(), true)) {
             $className = $this->getDefaultClassName();
         }
         return $className;
@@ -75,5 +75,14 @@ class Factory
     protected function getDefaultClassName()
     {
         return $this->defaultClassName;
+    }
+    /**
+     * Return the default className for an entity
+     *
+     * @return string
+     */
+    protected function getMainCLass()
+    {
+        return $this->mainClass;
     }
 }

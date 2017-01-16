@@ -12,6 +12,7 @@ class EntityFactory extends Factory
      */
 	protected $namespace = 'project\\model';
     protected $defaultClassName = Entity::class;
+    protected $mainClass = Entity::class;
 
     public function getEntity($name)
     {

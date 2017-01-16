@@ -26,5 +26,26 @@ namespace base\view;
 
 class HtmlView extends View
 {
+    protected $css;
+    protected $js;
+    public $title;
+    protected $header;
+    protected $body;
+    protected $footer;
+    protected $templateLocation;
 
+    public function setDefaultTemplateLocation( $templateLocation ){
+        $this->header = $templateLocation."/header.php";
+        $this->footer = $templateLocation."/footer.php";
+    }
+
+    public function setBody( $body ){
+        $this->body = $body;
+    }
+
+    public function render(){
+        include($this->header);
+        if($this->body!="")include($this->body);
+        include($this->footer);
+    }
 }

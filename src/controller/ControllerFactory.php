@@ -29,6 +29,7 @@ class controllerFactory extends Factory
 {
 	protected $namespace = "project\\controller";
     protected $defaultClassName = Controller::class;
+    protected $mainClass = Controller::class;
 
 	public function getController( $request, $view, $modelService )
 	{

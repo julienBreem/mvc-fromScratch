@@ -28,7 +28,8 @@ use base\core\Factory;
 class ViewFactory extends Factory
 {
     protected $namespace = "project\\view";
-    protected $defaultClassName = View::class;
+    protected $defaultClassName = HtmlView::class;
+    protected $mainClass = View::class;
 
 
     public function getView( $request )
