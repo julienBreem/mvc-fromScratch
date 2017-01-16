@@ -26,7 +26,7 @@ namespace base\core\http;
 
 use GuzzleHttp\Psr7\ServerRequest;
 
-class Request extends ServerRequest
+class appRequest extends ServerRequest
 {
     protected $controllerName = "site";
     protected $actionName = "index";

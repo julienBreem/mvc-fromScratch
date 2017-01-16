@@ -1,7 +1,9 @@
 <?php
 namespace base\view;
 
-class View
+use base\core\http\appResponse;
+
+class View extends appResponse
 {	
 	protected $css;
 	protected $js;

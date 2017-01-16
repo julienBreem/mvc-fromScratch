@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Created by Julien Breem.
  * Date: 12/12/2016
@@ -21,20 +20,11 @@
  *
  * Copyright (c) 2016
  **/
+
 namespace base\view;
 
-use base\core\Factory;
 
-class ViewFactory extends Factory
+class HtmlView extends View
 {
-    protected $namespace = "project\\view";
-    protected $defaultClassName = View::class;
 
-
-    public function getView( $request )
-	{
-        $class = $this->getClassName($request->getControllerName());
-		return new $class();
-	}
 }
-

@@ -4,7 +4,7 @@ include('config.php');
 
 //Initializes the request abstraction
 //$request = new base\core\request();
-$request = new base\core\http\Request();
+$request = new base\core\http\appRequest();
 
 //getting the view class from the request
 $viewFactory = new base\view\ViewFactory();

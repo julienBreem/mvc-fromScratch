@@ -23,13 +23,16 @@
  **/
 namespace base\controller;
 
-class controllerFactory
+use base\core\Factory;
+
+class controllerFactory extends Factory
 {
-	protected $directory = "controller";
-	
+	protected $namespace = "project\\controller";
+    protected $defaultClassName = Controller::class;
+
 	public function getController( $request, $view, $modelService )
 	{
-		$class = 'project\\'.$this->directory. '\\' . $request->getControllerName();
+		$class = $this->getClassName($request->getControllerName());
 		$controller = new $class($view, $modelService);
 		$controller->setName($request->getControllerName());
 		return $controller;
