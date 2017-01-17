@@ -93,7 +93,7 @@ class HtmlView extends View
     /**
      * @param $path
      */
-    public function setHtmlBodyPath($path )
+    public function setHtmlBodyPath($path)
     {
         $this->htmlBodyPath = $path;
     }
@@ -106,7 +106,7 @@ class HtmlView extends View
      * @param $path
      * @return string
      */
-    public function returnPathContent($path )
+    protected function returnPathContent($path)
     {
         ob_start();
         include $path;
@@ -121,10 +121,10 @@ class HtmlView extends View
      *
      * @return string
      */
-    public function getHtmlHeader()
+    protected function getHtmlHeader()
     {
-        $docType = $this->generateDoctype()."\n\r";
-        $header = '<html lang="'.$this->lang.'">'."\n\r";
+        $header = $this->generateDoctype()."\n\r";
+        $header .= '<html lang="'.$this->lang.'">'."\n\r";
         $header .= '<head>'."\n\r";
         $header .= '<title>'.$this->title.'</title>'."\n\r";
         $header .= '<meta http-equiv="content-type" content="text/html; charset='.$this->charset.'">'."\n\r";
@@ -161,7 +161,7 @@ class HtmlView extends View
     /**
      * @return string
      */
-    public function getHtmlBody()
+    protected function getHtmlBody()
     {
         $body = '<body>'."\n\r";
         if(file_exists($this->htmlBodyPath)){
@@ -181,7 +181,7 @@ class HtmlView extends View
     /**
      * @return string
      */
-    public function getHtmlFooter()
+    protected function getHtmlFooter()
     {
         $footer = '';
         if(file_exists($this->htmlFooterPath)){
