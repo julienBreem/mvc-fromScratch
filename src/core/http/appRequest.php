@@ -26,7 +26,7 @@ namespace base\core\http;
 
 use GuzzleHttp\Psr7\ServerRequest;
 
-class Request extends ServerRequest
+class appRequest extends ServerRequest
 {
     protected $controllerName = "site";
     protected $actionName = "index";
@@ -47,14 +47,17 @@ class Request extends ServerRequest
         $urlString = $this->getUri()->getQuery();
         $urlTab = explode("&",$urlString);
         foreach($urlTab as $param) {
-            $key = explode("=",$param)[0];
-            $value = explode("=",$param)[1];
-            if ($key == "c") {
-                $this->controllerName = $value;
-            } elseif ($key == "a") {
-                $this->actionName = $value;
-            } else {
-                $this->params[$key] = $value;
+            $paramArray = explode("=",$param);
+            if(count($paramArray)>1){
+                $key = $paramArray[0];
+                $value = $paramArray[1];
+                if ($key == "c") {
+                    $this->controllerName = $value;
+                } elseif ($key == "a") {
+                    $this->actionName = $value;
+                } else {
+                    $this->params[$key] = $value;
+                }
             }
         }
 

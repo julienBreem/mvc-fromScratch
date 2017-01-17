@@ -1,12 +1,14 @@
 <?php
 namespace base\controller;
 
+use base\view\View;
+
 class controller
 {	
 	protected $view;
 	protected $modelService;
 	protected $name;
-	public function __construct( $view, $modelService )
+	public function __construct( View $view, $modelService )
     {
 		$this->view = $view;
 		$this->modelService = $modelService;
@@ -24,8 +26,10 @@ class controller
 	public function getView(){
 		return $this->view;
 	}
-	public function render( $file, $models = []){
-		$this->view->setBody('./project/view/'.$this->name.'/'.$file.'.php');
+	public function render( $file = false, $models = []){
+		if($file){
+		    $this->view->setHtmlBodyPath('./project/view/'.$this->name.'/'.$file.'.php');
+        }
 		$this->view->setModels($models);
 	}
 }

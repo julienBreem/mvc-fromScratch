@@ -23,13 +23,18 @@
  **/
 namespace base\view;
 
-class ViewFactory
-{	
-	protected $directory = "view";
-	
-	public function getView( $request )
+use base\core\Factory;
+
+class ViewFactory extends Factory
+{
+    protected $namespace = "project\\view";
+    protected $defaultClassName = HtmlView::class;
+    protected $mainClass = View::class;
+
+
+    public function getView( $request )
 	{
-		$class = 'project\\'.$this->directory. '\\' . $request->getControllerName();
+        $class = $this->getClassName($request->getControllerName());
 		return new $class();
 	}
 }

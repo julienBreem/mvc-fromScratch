@@ -4,7 +4,7 @@ include('config.php');
 
 //Initializes the request abstraction
 //$request = new base\core\request();
-$request = new base\core\http\Request();
+$request = new base\core\http\appRequest();
 
 //getting the view class from the request
 $viewFactory = new base\view\ViewFactory();
@@ -20,7 +20,10 @@ $controller = $controllerFactory->getController($request,$view,$modelService);
 
 //Execute the necessary command on the controller 
 $command = $request->getActionName();
-$controller->{$command}($request);
-
+try{
+    $controller->{$command}($request);
+} catch (\Exception $e){
+    $view->setException($e);
+}
 //Produces the response
 echo $view->render();

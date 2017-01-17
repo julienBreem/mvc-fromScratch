@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Created by Julien Breem.
  * Date: 12/12/2016
@@ -21,22 +20,12 @@
  *
  * Copyright (c) 2016
  **/
-namespace base\controller;
 
-use base\core\Factory;
+namespace base\core\http;
 
-class controllerFactory extends Factory
+use GuzzleHttp\Psr7\Response;
+
+class appResponse extends Response
 {
-	protected $namespace = "project\\controller";
-    protected $defaultClassName = Controller::class;
-    protected $mainClass = Controller::class;
 
-	public function getController( $request, $view, $modelService )
-	{
-		$class = $this->getClassName($request->getControllerName());
-		$controller = new $class($view, $modelService);
-		$controller->setName($request->getControllerName());
-		return $controller;
-	}
 }
-
