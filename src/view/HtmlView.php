@@ -36,15 +36,15 @@ class HtmlView extends View
     /**
      * css files to be registered
      *
-     * @var string
+     * @var array
      */
-    protected $css;
+    protected $css = [];
     /**
      * js files to be registered
      *
-     * @var string
+     * @var array
      */
-    protected $js;
+    protected $js = [];
     /**
      * page's title
      *
@@ -74,6 +74,10 @@ class HtmlView extends View
      */
     protected $templateLocation;
 
+    protected $htmlVersion = "5";
+    protected $lang = "fr";
+    protected $charset = "utf8";
+    protected $meta = [];
 
     /**
      * define a folder where default header and footer are at
@@ -111,11 +115,47 @@ class HtmlView extends View
     }
 
     /**
+     *
+     * generate conform headers.
+     * may include template header
+     *
      * @return string
      */
     public function getHtmlHeader()
     {
-        return $this->returnPathContent( $this->htmlHeaderPath );
+        $docType = $this->generateDoctype()."\n\r";
+        $header = '<html lang="'.$this->lang.'">'."\n\r";
+        $header .= '<head>'."\n\r";
+        $header .= '<title>'.$this->title.'</title>'."\n\r";
+        $header .= '<meta http-equiv="content-type" content="text/html; charset='.$this->charset.'">'."\n\r";
+        foreach($this->meta as $name => $content){
+            $header .= '<meta name="'.$name.'" content="'.$content.'">'."\n\r";
+        }
+        if(file_exists($this->htmlHeaderPath)){
+            $header .= $this->returnPathContent($this->htmlHeaderPath);
+        }
+        $header .= $this->generateCssBlocks();
+        $header .= '</head>'."\n\r";
+        return $header;
+
+    }
+    protected function generateDoctype()
+    {
+        switch($this->htmlVersion){
+            case "5": return '<!DOCTYPE html>';
+            case "4.01 Strict": return '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">';
+            case "4.01 Transitional": return '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
+            case "4.01 Frameset":  return '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">';
+        }
+    }
+
+    protected function generateCssBlocks()
+    {
+        $css = '';
+        foreach($this->css as $cssName => $cssPath){
+            $css .= '<link rel="stylesheet" href="'.$cssPath.'">'."\n\r";
+        }
+        return $css;
     }
 
     /**
@@ -123,16 +163,44 @@ class HtmlView extends View
      */
     public function getHtmlBody()
     {
-        return $this->returnPathContent( $this->htmlBodyPath );
+        $body = '<body>'."\n\r";
+        if(file_exists($this->htmlBodyPath)){
+            $body .= $this->returnPathContent($this->htmlBodyPath);
+        }
+        return $body;
     }
 
+    protected function generateJsBlocks()
+    {
+        $js = '';
+        foreach($this->js as $scriptName => $scriptPath){
+            $js .= '<script src="'.$scriptPath.'"></script>'."\n\r";
+        }
+        return $js;
+    }
     /**
      * @return string
      */
     public function getHtmlFooter()
     {
-        return $this->returnPathContent( $this->htmlFooterPath );
+        $footer = '';
+        if(file_exists($this->htmlFooterPath)){
+            $footer .= $this->returnPathContent($this->htmlFooterPath);
+        }
+        $footer .= $this->generateJsBlocks();
+        $footer .= '</body>'."\n\r";
+        $footer .= '</html>'."\n\r";
+        return $footer;
     }
+
+    public function registerJs($name, $path){
+        $this->js[$name] = $path;
+    }
+
+    public function registerCss($name, $path){
+        $this->css[$name] = $path;
+    }
+
 
     /**
      * setup response body and call parent render.
@@ -142,7 +210,7 @@ class HtmlView extends View
     {
         if($this->response->getStatusCode()=="200"){
             $body = $this->getHtmlHeader();
-            if($this->htmlBodyPath!="")$body .= $this->getHtmlBody();
+            $body .= $this->getHtmlBody();
             $body .= $this->getHtmlFooter();
             $this->setResponseBody($body);
         }
