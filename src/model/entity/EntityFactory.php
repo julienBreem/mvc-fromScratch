@@ -1,7 +1,9 @@
 <?php
 namespace base\model\entity;
 
-class EntityFactory
+use base\core\Factory;
+
+class EntityFactory extends Factory
 {
     /**
      * Default namespace for entity
@@ -9,54 +11,13 @@ class EntityFactory
      * @var string
      */
 	protected $namespace = 'project\\model';
+    protected $defaultClassName = Entity::class;
+    protected $mainClass = Entity::class;
 
-
-    /**
-     * Factory method to build an entity based on name
-     * If built entity is not a child of Entity, default entity is returned
-     *
-     * @param $name
-     * @return Entity
-     */
-	public function getEntity($name)
-	{
-        $className = $this->buildEntityClassName($name);
-        if (! is_a($className, Entity::class, true)) {
-            $className = $this->getDefaultEntityClassName();
-        }
+    public function getEntity($name)
+    {
+        $className = $this->getClassName($name);
         return new $className($name);
-	}
-
-    /**
-     * Allow to change directory namespace
-     *
-     * @param string $namespace
-     */
-	public function setNamespace($namespace)
-	{
-		$this->namespace = $namespace;
-	}
-
-    /**
-     * Build an entity className based on a name
-     *
-     * @param $name
-     * @return string
-     */
-	protected function buildEntityClassName($name)
-    {
-        $namespace = rtrim($this->namespace, '/\\') . '\\';
-        return $namespace .$name;
-    }
-
-    /**
-     * Return the default className for an entity
-     *
-     * @return string
-     */
-	protected function getDefaultEntityClassName()
-    {
-        return Entity::class;
     }
 }
 
