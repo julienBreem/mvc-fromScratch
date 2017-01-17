@@ -7,6 +7,7 @@ class site extends HtmlView
 {
 	public function __construct()
     {
+        parent::__construct();
 		$this->title = "Site";
 	}
 	

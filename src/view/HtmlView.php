@@ -23,29 +23,129 @@
 
 namespace base\view;
 
-
+/**
+ * Class HtmlView
+ *
+ * will handle output in HTML mode and provide
+ * method to ease HTML manipulation ( such as registering css, js, etc )
+ *
+ * @package base\view
+ */
 class HtmlView extends View
 {
+    /**
+     * css files to be registered
+     *
+     * @var string
+     */
     protected $css;
+    /**
+     * js files to be registered
+     *
+     * @var string
+     */
     protected $js;
+    /**
+     * page's title
+     *
+     * @var string
+     */
     public $title;
-    protected $header;
-    protected $body;
-    protected $footer;
+    /**
+     * path of the html page's header
+     *
+     * @var string
+     */
+    protected $htmlHeaderPath;
+    /**
+     * path of the html page's body
+     *
+     * @var string
+     */
+    protected $htmlBodyPath;
+    /**
+     * path of the html page's footer
+     *
+     * @var string
+     */
+    protected $htmlFooterPath;
+    /**
+     * @var string
+     */
     protected $templateLocation;
 
-    public function setDefaultTemplateLocation( $templateLocation ){
-        $this->header = $templateLocation."/header.php";
-        $this->footer = $templateLocation."/footer.php";
+
+    /**
+     * define a folder where default header and footer are at
+     *
+     * @param string $templateLocation
+     */
+    public function setDefaultTemplateLocation($templateLocation )
+    {
+        $this->htmlHeaderPath = $templateLocation."/header.php";
+        $this->htmlFooterPath = $templateLocation."/footer.php";
     }
 
-    public function setBody( $body ){
-        $this->body = $body;
+    /**
+     * @param $path
+     */
+    public function setHtmlBodyPath($path )
+    {
+        $this->htmlBodyPath = $path;
     }
 
-    public function render(){
-        include($this->header);
-        if($this->body!="")include($this->body);
-        include($this->footer);
+    /**
+     * return content of a file from a given path.
+     * Used to generate output.
+     *
+     *
+     * @param $path
+     * @return string
+     */
+    public function returnPathContent($path )
+    {
+        ob_start();
+        include $path;
+        $output = ob_get_clean();
+        return $output;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHtmlHeader()
+    {
+        return $this->returnPathContent( $this->htmlHeaderPath );
+    }
+
+    /**
+     * @return string
+     */
+    public function getHtmlBody()
+    {
+        return $this->returnPathContent( $this->htmlBodyPath );
+    }
+
+    /**
+     * @return string
+     */
+    public function getHtmlFooter()
+    {
+        return $this->returnPathContent( $this->htmlFooterPath );
+    }
+
+    /**
+     * setup response body and call parent render.
+     * @return string
+     */
+    public function render()
+    {
+        if($this->response->getStatusCode()=="200"){
+            $body = $this->getHtmlHeader();
+            if($this->htmlBodyPath!="")$body .= $this->getHtmlBody();
+            $body .= $this->getHtmlFooter();
+            $this->setResponseBody($body);
+        }
+        parent::render();
     }
 }

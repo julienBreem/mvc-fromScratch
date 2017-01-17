@@ -20,7 +20,10 @@ $controller = $controllerFactory->getController($request,$view,$modelService);
 
 //Execute the necessary command on the controller 
 $command = $request->getActionName();
-$controller->{$command}($request);
-
+try{
+    $controller->{$command}($request);
+} catch (\Exception $e){
+    $view->setException($e);
+}
 //Produces the response
 echo $view->render();
