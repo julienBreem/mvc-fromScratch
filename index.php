@@ -3,7 +3,8 @@ require __DIR__ . '/vendor/autoload.php';
 include('config.php');
 
 //Initializes the request abstraction
-$request = new base\core\request();
+//$request = new base\core\request();
+$request = new base\core\http\Request();
 
 //getting the view class from the request
 $viewFactory = new base\view\ViewFactory();
