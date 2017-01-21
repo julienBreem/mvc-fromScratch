@@ -3,7 +3,10 @@
     "description": "This is a PHP framework to automate CRUD model",
     "type": "project",
     "license": "MIT",
-    "require": {},
+    "require": {
+        "psr/http-message": "^1.0",
+        "guzzlehttp/psr7": "^1.3"
+    },
     "autoload" : {
         "psr-4" : {
             "base\\" : "src/",
