@@ -3,7 +3,7 @@ $config["view"] = [
 	"defaultTemplateLocation" => __DIR__ . '/project/templates',
 ];
 $config["model"] = [
-	"dataConnection" => "mysql:host=localhost;dbname=test;username=root;",
+	"dataConnection" => "mysql:host=localhost;dbname=mvc-scratch;username=root;",
     "namespace" => "project\\model",
     "entities" => [
         "physicAutoCompleted" => [

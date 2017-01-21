@@ -2,7 +2,9 @@
 
 namespace base\core;
 
-class Request
+use base\core\serviceManager\implementation\loadableServiceManager\LoadableServiceInterface;
+
+class Request implements LoadableServiceInterface
 {
     protected $uri;
 	protected $controllerName = "site";
